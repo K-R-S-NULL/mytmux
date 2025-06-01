@@ -1,7 +1,5 @@
 #!/bin/bash
 #set -x
-
-source ~/.mytmux/mytmux_core.sh
 TMUX="tmux -2 -f ~/.mytmux/tmux.conf"
 SESSIONNAME=tmux_menu
 
