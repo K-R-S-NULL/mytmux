@@ -1,6 +1,6 @@
 #!/bin/bash
-#set -x
-TMUX="tmux -2 -f ~/.mytmux/tmux.conf"
+set -x
+TMUX="tmux -2"
 SESSIONNAME=tmux_menu
 
 MENU_SCRIPT=./menu_mytmux.sh
@@ -12,10 +12,11 @@ if [ $? -eq 0 ]; then
        $TMUX attach -t $SESSIONNAME
        exit 0;
 fi
-
-tmux new-session -d -s $SESSIONNAME
+$TMUX new-session -d -s $SESSIONNAME
+tmux source-file ~/.mytmux/tmux.conf
+tmux set -g mouse on
 # Attach to the created session
-
+tmux rename-window -t $SESSIONNAME "Main Menu"
 tmux send-keys -t $SESSIONNAME 'eval "$(ssh-agent -s)"' C-m
 COMMAND="ssh-add ~/.ssh/ssh_user_ca && $MENU_SCRIPT"
 tmux send-keys -t $SESSIONNAME "$COMMAND" C-m
